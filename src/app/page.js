@@ -1,66 +1,55 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client"
+import { useState } from "react";
 
 export default function Home() {
+  const [userChoice, setUserChoice] = useState("Pierre");
+  const [computerChoice, setComputerChoice] = useState("");
+  const [wins, setWins] = useState(0);
+  const [losses, setLosses] = useState(0);
+  const [result, setResult] = useState("À vous de jouer !");
+
+  const choices = ["Pierre", "Feuille", "Ciseaux"];
+
+  const Submit = () => {
+    const randomChoice = choices[Math.floor(Math.random() * choices.length)];
+    setComputerChoice(randomChoice);
+
+    if (userChoice === randomChoice) {
+      setResult("Égalité !");
+    } else if (
+      (userChoice === "Pierre" && randomChoice === "Ciseaux") ||
+      (userChoice === "Feuille" && randomChoice === "Pierre") ||
+      (userChoice === "Ciseaux" && randomChoice === "Feuille")
+    ) {
+      setResult("Gagné !");
+      setWins(wins + 1);
+    } else {
+      setResult("Perdu !");
+      setLosses(losses + 1);
+    }
+  };
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.js file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className="main-container" style={{ textAlign: 'center', marginTop: '50px' }}>
+      <h1>Let's Play</h1>
+
+      <select value={userChoice} onChange={(e) => setUserChoice(e.target.value)}>
+        <option value='Pierre'>Pierre</option>
+        <option value='Feuille'>Feuille</option>
+        <option value='Ciseaux'>Ciseaux</option>
+      </select>
+
+      <button onClick={Submit}>Go..</button>
+
+      <div>
+        <p>Ordinateur a choisi : <strong>{computerChoice}</strong></p>
+        <h2>{result}</h2>
+      </div>
+
+      <div>
+        <span><strong>Victoires:</strong> {wins}</span>
+        <span><strong>Défaites:</strong> {losses}</span>
+      </div>
     </div>
   );
 }
