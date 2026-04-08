@@ -6,7 +6,7 @@ export default function Home() {
   const [computerChoice, setComputerChoice] = useState("");
   const [wins, setWins] = useState(0);
   const [losses, setLosses] = useState(0);
-  const [result, setResult] = useState("À vous de jouer !");
+  const [result, setResult] = useState("Debut selectionner votre choix");
 
   const choices = ["Pierre", "Feuille", "Ciseaux"];
 
