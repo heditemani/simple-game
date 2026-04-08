@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 export default function Home() {
-  const [userChoice, setUserChoice] = useState("Select votre choix");
+  const [userChoice, setUserChoice] = useState("choix");
   const [computerChoice, setComputerChoice] = useState("");
   const [wins, setWins] = useState(0);
   const [losses, setLosses] = useState(0);
@@ -11,14 +11,17 @@ export default function Home() {
   const choices = ["Pierre", "Feuille", "Ciseaux"];
 
   const Submit = () => {
+    
+    if (userChoice === "choix"){
+      setResult("SVP Choisir votre choix");
+      return;
+    }
+
     const randomChoice = choices[Math.floor(Math.random() * choices.length)];
     setComputerChoice(randomChoice);
 
-    if (userChoice === "Selectionner votre choix"){
-
-      setResult("SVP Choisir votre choix")
-
-    } else if (userChoice === randomChoice) {
+    
+    if (userChoice === randomChoice) {
       setResult("Égalité !");
     } else if (
       (userChoice === "Pierre" && randomChoice === "Ciseaux") ||
@@ -28,6 +31,9 @@ export default function Home() {
       setResult("Gagné !");
       setWins(wins + 1);
     } else {
+      (userChoice === "Pierre" && randomChoice === "Ciseaux") ||
+      (userChoice === "Feuille" && randomChoice === "Pierre") ||
+      (userChoice === "Ciseaux" && randomChoice === "Feuille")
       setResult("Perdu !");
       setLosses(losses + 1);
     }
@@ -38,7 +44,7 @@ export default function Home() {
       <h1>Pierre Papier Ciseaux</h1>
 
       <select value={userChoice} onChange={(e) => setUserChoice(e.target.value)}>
-        <option value='Selectionner votre choix'>Selectionner votre choix</option>
+        <option value='choix'>Selectionner votre choix</option>
         <option value='Pierre'>Pierre</option>
         <option value='Feuille'>Feuille</option>
         <option value='Ciseaux'>Ciseaux</option>
@@ -51,9 +57,9 @@ export default function Home() {
         <h2>{result}</h2>
       </div>
 
-      <div>
-        <span><strong>Victoires:</strong> {wins}</span>
-        <span><strong>Défaites:</strong> {losses}</span>
+      <div className="result-container">
+        <span className="result v"><strong>Victoires:</strong> {wins}</span>
+        <span className="result d"><strong>Défaites:</strong> {losses}</span>
       </div>
     </div>
   );
