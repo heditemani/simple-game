@@ -31,9 +31,6 @@ export default function Home() {
       setResult("Gagné !");
       setWins(wins + 1);
     } else {
-      (userChoice === "Pierre" && randomChoice === "Ciseaux") ||
-      (userChoice === "Feuille" && randomChoice === "Pierre") ||
-      (userChoice === "Ciseaux" && randomChoice === "Feuille")
       setResult("Perdu !");
       setLosses(losses + 1);
     }
